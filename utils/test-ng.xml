@@ -1,0 +1,9 @@
+
+<suite name="OrangeCrmTest">
+    <test name="PIM Functional Verification">
+        <classes>
+            <!-- Fixed package-qualified class path and removed extra closing bracket -->
+            <class name="com.freecrm.com.orangeHCMTest" />
+        </classes>
+    </test>
+</suite>
