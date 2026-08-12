@@ -5,9 +5,12 @@
     <classes>
       <class name="com.freecrm.com.orangeHCMTest">
         <methods>
-          <include name="VerifyNewAddedEmployee"/>
           <include name="setup"/>
+          <include name="VerifyHomePageISOpeningAfterLogin"/>
+          <include name="VerifyLeftHandMenuPresent"/>
           <include name="teardown"/>
+          <include name="VerifyLoginWithValidCredentials"/>
+          <include name="VerifyEmployeeInDirectory"/>
         </methods>
       </class> <!-- com.freecrm.com.orangeHCMTest -->
     </classes>

@@ -102,7 +102,56 @@ public class orangeHCMTest {
 		}
 		Assert.assertEquals(bFound, true);
 	}
+	
+	@Test(priority = 6)
+	public void VerifyDirectoryPageIsOPening() {
+		driver.findElement(By.xpath("//span[text()= 'Directory']/parent::a")).click();
+		String sDirectoery = driver.findElement(By.xpath("//h6[text()='Directory']")).getText();
+		Assert.assertEquals(sDirectoery, "Directory");
+	}
+	
+	@Test(priority = 7)
+	public void VerifyAddedEmployeeInDirectory() {
+		driver.findElement(By.xpath("//span[text()= 'Directory']/parent::a")).click();
+		WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(30));
+		wait1.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h5[text()='Directory']"))));
+		
+		driver.findElement(By.xpath("//label[text()='Employee Name']/parent::div/following-sibling::div//div[@class='oxd-autocomplete-wrapper']//input[@placeholder='Type for hints...']")).sendKeys("Vir");
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//div[@class='oxd-autocomplete-option']/span)[1]"))));
+		driver.findElement(By.xpath("(//div[@class='oxd-autocomplete-option']/span)[1]")).click();
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		String sEmployeeFound = driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span']")).getText();
+		boolean bFound = false;
+		if (sEmployeeFound.contains("Records Found")) {
+			bFound = true;
+		}
+		Assert.assertEquals(bFound, true);
+	}
+	
+	@Test(priority = 8)
+	public void VerifyAdminPage() {
+		driver.findElement(By.xpath("//span[text()= 'Admin']/parent::a")).click();
+		String sDirectoery = driver.findElement(By.xpath("//h6[text()='Admin']")).getText();
+		Assert.assertEquals(sDirectoery, "Admin");
+	}
 
+	@Test(priority = 9)
+	public void VerifyAdminInAdminPage() {
+		driver.findElement(By.xpath("//span[text()= 'Admin']/parent::a")).click();
+		WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(30));
+		wait1.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h5[text()='System Users']"))));
+		
+		driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).sendKeys("admin");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		String sEmployeeFound = driver.findElement(By.xpath("//span[@class='oxd-text oxd-text--span']")).getText();
+		boolean bFound = false;
+		if (sEmployeeFound.contains("Records Found")) {
+			bFound = true;
+		}
+		Assert.assertEquals(bFound, true);
+	}
+	
 	
 	@AfterClass
 	public void teardown() {
