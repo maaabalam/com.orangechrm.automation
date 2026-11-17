@@ -3,59 +3,19 @@ package com.freecrm.com;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class orangeHCMTest {
-	WebDriver driver;
+public class orangeHCMTest extends BaseTest {
 	
-	@BeforeClass
-	public void setup() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\mdaay\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.get("https://opensource-demo.orangehrmlive.com/");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(6000));
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-		
-	}
 	
-	@Test(priority = 0)
-	public void VerifyLoginWithValidCredentials() {
-		driver.findElement(By.xpath("//input[@name='username']")).sendKeys("Admin");
-		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin123");
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-	}
 	
-	@Test(priority = 1)
-	public void VerifyHomePageISOpeningAfterLogin() {
-		String shomepageTitle = driver.findElement(By.xpath("//div[@class=\"oxd-topbar-header-title\"]//h6")).getText();
-		Assert.assertEquals(shomepageTitle, "Dashboard");
-	}
-	
-	@Test(priority = 2)
-	public void VerifyLeftHandMenuPresent() {
-		List<String> sExpectedMenus = List.of("Admin", "PIM", "Leave", "Time", "Recruitment", "My Info", "Performance", "Dashboard", "Directory", "Maintenance", "Claim", "Buzz");
-		List<String> sActualLeftHandMenusn = new ArrayList<String>();
-		List<WebElement> sLeftHandMenus = driver.findElements(By.xpath("//ul[@class= 'oxd-main-menu']//span"));
-		for (WebElement sLHM: sLeftHandMenus) {
-			sActualLeftHandMenusn.add(sLHM.getText());
-		}
-		Assert.assertEquals(sExpectedMenus, sActualLeftHandMenusn);
-	}
 	
 	@DataProvider
 	public Object[][] getData() {
@@ -64,7 +24,7 @@ public class orangeHCMTest {
 		};
 	}
 	
-	@Test(priority = 4, dataProvider = "getData")
+	@Test(dependsOnMethods = "VerifyLeftHandMenuPresent", dataProvider = "getData")
 	public void VerifyNewEmployeeCanBeAdded(String fname, String lname, String emplid) throws InterruptedException {
 		driver.findElement(By.xpath("//span[text()= 'PIM']/parent::a")).click();
 		driver.findElement(By.linkText("Add Employee")).click();
@@ -75,7 +35,7 @@ public class orangeHCMTest {
 		Thread.sleep(10000);
 	}
 	
-	@Test(priority = 5)
+	@Test(dependsOnMethods = "VerifyNewEmployeeCanBeAdded")
 	public void VerifyNewAddedEmployee() throws InterruptedException {
 		driver.findElement(By.xpath("//span[text()= 'PIM']/parent::a")).click();
 		driver.findElement(By.linkText("Employee List")).click();
@@ -103,14 +63,14 @@ public class orangeHCMTest {
 		Assert.assertEquals(bFound, true);
 	}
 	
-	@Test(priority = 6)
+	@Test(dependsOnMethods = "VerifyNewAddedEmployee")
 	public void VerifyDirectoryPageIsOPening() {
 		driver.findElement(By.xpath("//span[text()= 'Directory']/parent::a")).click();
 		String sDirectoery = driver.findElement(By.xpath("//h6[text()='Directory']")).getText();
 		Assert.assertEquals(sDirectoery, "Directory");
 	}
 	
-	@Test(priority = 7)
+	@Test(dependsOnMethods = "VerifyDirectoryPageIsOPening")
 	public void VerifyAddedEmployeeInDirectory() {
 		driver.findElement(By.xpath("//span[text()= 'Directory']/parent::a")).click();
 		WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(30));
@@ -129,14 +89,14 @@ public class orangeHCMTest {
 		Assert.assertEquals(bFound, true);
 	}
 	
-	@Test(priority = 8)
+	@Test(dependsOnMethods = "VerifyAddedEmployeeInDirectory")
 	public void VerifyAdminPage() {
 		driver.findElement(By.xpath("//span[text()= 'Admin']/parent::a")).click();
 		String sDirectoery = driver.findElement(By.xpath("//h6[text()='Admin']")).getText();
 		Assert.assertEquals(sDirectoery, "Admin");
 	}
 
-	@Test(priority = 9)
+	@Test(dependsOnMethods = "VerifyAdminPage")
 	public void VerifyAdminInAdminPage() {
 		driver.findElement(By.xpath("//span[text()= 'Admin']/parent::a")).click();
 		WebDriverWait wait1 = new WebDriverWait(driver,Duration.ofSeconds(30));
@@ -152,9 +112,4 @@ public class orangeHCMTest {
 		Assert.assertEquals(bFound, true);
 	}
 	
-	
-	@AfterClass
-	public void teardown() {
-		driver.quit();
-	}
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [OrangeCrmTest]">
+  <test thread-count="5" name="PIM Functional Verification(failed)">
+    <classes>
+      <class name="com.freecrm.com.orangeHCMTest">
+        <methods>
+          <include name="VerifyNewAddedEmployee"/>
+          <include name="setup"/>
+          <include name="VerifyHomePageISOpeningAfterLogin"/>
+          <include name="VerifyAdminPage"/>
+          <include name="teardown"/>
+          <include name="VerifyLeftHandMenuPresent"/>
+          <include name="VerifyDirectoryPageIsOPening"/>
+          <include name="VerifyNewEmployeeCanBeAdded"/>
+          <include name="VerifyLoginWithValidCredentials"/>
+          <include name="VerifyAdminInAdminPage"/>
+          <include name="VerifyAddedEmployeeInDirectory"/>
+        </methods>
+      </class> <!-- com.freecrm.com.orangeHCMTest -->
+    </classes>
+  </test> <!-- PIM Functional Verification(failed) -->
+</suite> <!-- Failed suite [OrangeCrmTest] -->

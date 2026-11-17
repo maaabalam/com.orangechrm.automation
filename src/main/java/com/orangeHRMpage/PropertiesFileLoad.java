@@ -1,4 +1,4 @@
-package SeleniumTestAutomation;
+package com.orangeHRMpage;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -3,16 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.freecrm.com.orangeHCMTest">
+      <class name="com.freecrm.com.orangeTest">
         <methods>
-          <include name="setup"/>
-          <include name="VerifyHomePageISOpeningAfterLogin"/>
-          <include name="VerifyLeftHandMenuPresent"/>
-          <include name="teardown"/>
-          <include name="VerifyLoginWithValidCredentials"/>
-          <include name="VerifyEmployeeInDirectory"/>
+          <include name="VerifyNewEmployeeCanBeAdded" invocation-numbers="0 1 2 3"/>
         </methods>
-      </class> <!-- com.freecrm.com.orangeHCMTest -->
+      </class> <!-- com.freecrm.com.orangeTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
